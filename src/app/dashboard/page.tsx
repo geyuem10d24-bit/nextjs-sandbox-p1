@@ -1,48 +1,65 @@
 "use client";
-
 import React, { useState } from "react";
+import Header from "@/components/Header";
+import StatCard from "@/components/StatCard";
+import SprintCard from "@/components/SprintCard";
 
 export default function DashboardPage() {
-  // 1. Declare a reactive numeric state memory block using TS type parameters
   const [xp, setXp] = useState<number>(0);
+  const [hours, setHours] = useState<number>(12);
 
-  // 2. Define an event execution function using arrow syntax
-  const handleEarnXP = (): void => {
-    setXp(xp + 10);
+  const handleStudySprint = (): void => {
+    setXp(xp + 15);
+    setHours(hours + 1);
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-slate-50 p-6">
-      <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-md border border-gray-100 text-center">
-        <div className="mx-auto h-20 w-20 rounded-full bg-indigo-600 flex items-center justify-center text-white text-2xl font-black mb-4">
-          JS
-        </div>
-        <h2 className="text-xl font-bold text-gray-800">Alex Smith </h2>
-        <p className="text-xs font-semibold text-gray-400 mb-6">
-          Bootcamp Student{" "}
-        </p>
+    <div className="min-h-screen bg-slate-50 flex flex-col">
+      {/* 1. Mount the Global Full-Width Shared Top Header */}
+      <Header />
 
-        <div className="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl mb-6">
-          <div>
-            <p className="text-lg font-extrabold text-gray-800">12 </p>
-            <p className="text-xs text-gray-400 font-medium">Hours Learned </p>
-          </div>
-
-          {/* 3. Drop the active state variable inside brackets to print live numbers */}
-          <div className="border-l border-gray-200">
-            <p className="text-lg font-extrabold text-indigo-600">{xp} </p>
-            <p className="text-xs text-gray-400 font-medium">XP Points </p>
-          </div>
+      {/* 2. Expand Layout to a full dashboard grid system */}
+      <main className="flex-1 max-w-4xl w-full mx-auto p-6 md:p-8">
+        <div className="mb-6">
+          <h2 className="text-2xl font-black text-gray-800 tracking-tight">
+            Student Dashboard{" "}
+          </h2>
+          <p className="text-sm text-gray-400 font-medium">
+            Track your learning analytics in real-time.{" "}
+          </p>
         </div>
 
-        {/* 4. Connect the browser execution command to the function logic */}
-        <button
-          onClick={handleEarnXP}
-          className="w-full rounded-xl bg-indigo-600 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 active:scale-95 transition duration-150"
-        >
-          Study for 1 Hour (+10 XP)
-        </button>
-      </div>
-    </main>
+        {/* 3. Reusing the SAME StatCard component and feeding it completely DIFFERENT properties */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+          <StatCard
+            title="Hours Invested"
+            value={hours}
+            emoji="⏰"
+            themeColor="bg-blue-50"
+          />
+          <StatCard
+            title="Experience Points (XP)"
+            value={xp}
+            emoji="🏆"
+            themeColor="bg-amber-50"
+          />
+          <StatCard
+            title="card3"
+            value={xp}
+            emoji="😎"
+            themeColor="bg-amber-50"
+          />
+          <StatCard
+            title="card4"
+            value={xp}
+            emoji="😍"
+            themeColor="bg-amber-50"
+          />
+        </div>
+
+        {/* Action Control Panel Box */}
+        <SprintCard sprintOnClick={handleStudySprint} />
+      </main>
+    </div>
   );
 }
